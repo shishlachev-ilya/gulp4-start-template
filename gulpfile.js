@@ -7,7 +7,15 @@ let gulp = require('gulp'),
 	sourcemaps = require('gulp-sourcemaps'),
 	autoprefixer = require('gulp-autoprefixer'),
 	htmlmin = require('gulp-html-minifier'),
+	sassLint = require('gulp-sass-lint'),
 	browserSync = require('browser-sync').create();
+
+gulp.task('lint', function () {
+	return gulp.src('src/assets/scss/**/*.s+(a|c)ss')
+	.pipe(sassLint())
+	.pipe(sassLint.format())
+	.pipe(sassLint.failOnError())
+});
 
 gulp.task('minify', function () {
 	return gulp.src('src/pages/*.html')
@@ -47,11 +55,11 @@ gulp.task('serve', function() {
 
 gulp.task('watch', function () {
 	gulp.watch('src/pages/*.html', gulp.series('minify'));
-	gulp.watch('src/assets/scss/main.scss', gulp.series('sass'));
+	gulp.watch('src/assets/scss/main.scss', gulp.series('sass', 'lint'));
 	gulp.watch('src/assets/script/*.js', gulp.series('script'));
 });
 
 gulp.task('default', gulp.series(
-	gulp.parallel('sass', 'minify', 'script'),
+	gulp.parallel('sass', 'lint', 'minify', 'script'),
 	gulp.parallel('watch', 'serve')
 ));

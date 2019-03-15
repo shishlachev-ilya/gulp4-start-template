@@ -1,0 +1,4 @@
+options:
+  formatter: stylish
+files:
+  include: 'src/assets/scss/main.scss'
