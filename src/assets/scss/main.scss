@@ -1,1 +1,8 @@
-@import "common/basic";
+//common style
+@import 'common/normalize';
+@import 'common/variables';
+@import 'common/fonts';
+@import 'common/mixin';
+@import 'common/basic';
+
+//sections
